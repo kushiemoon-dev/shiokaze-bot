@@ -1,32 +1,36 @@
 # shiokaze-bot
 
-Discord bot for a solo+bots AzerothCore realm hosted on Proxmox: remote
+Matrix bot for a solo+bots AzerothCore realm hosted on Proxmox: remote
 power on/off, DB status, RAM/CPU pre-flight check, on-demand backup,
 upstream update watcher.
 
-All commands are locked to a single owner (`DISCORD_OWNER_ID`) and reply
-ephemerally — the bot never posts to a channel on its own initiative,
-except for the update-watcher DM.
+All commands are locked to a single owner (`MATRIX_OWNER_ID`); the bot never
+posts on its own initiative except the update-watcher notice. Matrix has no ephemeral-reply
+equivalent to Discord's — replies are visible to whoever is in the room.
 
 ## Commands
 
-- `/realm start` — starts the VM, waits for the world to finish loading, confirms once it's playable
-- `/realm stop` — graceful shutdown (saves the DB before power-off)
-- `/realm status` — up/down, main character, bots online
-- `/realm alt <name>` — same, for any character in the roster
-- `/realm health` — VM and Proxmox host RAM/CPU, warns if it's getting tight
-- `/realm backup` — triggers a remote DB+patches+config backup
+Plain-text messages in room `AzerothCore bot`:
+
+- `!realm start` — starts the VM, waits for the world to finish loading, confirms once it's playable
+- `!realm stop` — graceful shutdown (saves the DB before power-off)
+- `!realm status` — up/down, main character, bots online
+- `!realm alt <name>` — same, for any character in the roster
+- `!realm health` — VM and Proxmox host RAM/CPU, warns if it's getting tight
+- `!realm backup` — triggers a remote DB+patches+config backup
 
 Background task: checks once a week whether the tracked fork has a new
-commit, DMs the owner only if it does.
+commit, posts into room `Realm events` only if it does.
 
 ## Config (environment variables)
 
 | Variable | Description |
 |---|---|
-| `DISCORD_TOKEN` | Bot token |
-| `DISCORD_OWNER_ID` | Only user allowed to use the commands |
-| `DISCORD_GUILD_ID` | Guild where slash commands are registered |
+| `MATRIX_HOMESERVER_URL` | Synapse homeserver base URL |
+| `MATRIX_ACCESS_TOKEN` | `@shiokaze:matrix.kushie.dev`'s access token |
+| `MATRIX_REALM_ROOM_ID` | Room where `!realm` commands are read + answered |
+| `MATRIX_EVENTS_ROOM_ID` | Room where the GitHub-watch notice is posted |
+| `MATRIX_OWNER_ID` | Only Matrix user ID allowed to trigger commands |
 | `PROXMOX_HOST` | Proxmox node address (API) |
 | `PROXMOX_TOKEN_ID` / `PROXMOX_TOKEN_SECRET` | Scoped API token (power+audit on the VM, audit on the node) |
 | `PROXMOX_CA_PATH` | Pinned Proxmox self-signed cert (no `verify=False`) |
@@ -42,6 +46,6 @@ No secret is hardcoded in the code — everything comes from the environment.
 
 ## Deployment
 
-Runs as a systemd service inside a dedicated Python venv (see `discord.py`,
-`pymysql`, `requests` as dependencies). The backup script (`run-backup.sh`)
+Runs as a systemd service inside a dedicated Python venv (see `pymysql`,
+`requests` as dependencies). The backup script (`run-backup.sh`)
 and its restricted SSH key live on the realm server itself, not in this repo.
