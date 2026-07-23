@@ -37,7 +37,7 @@ commit, posts into room `Realm events` only if it does.
 | `REALM_NODE` / `REALM_VMID` | Realm's node + VMID |
 | `REALM_HOST` | VM IP (world-port poll + MySQL) |
 | `REALM_WORLD_PORT` | Worldserver port (default 8085) |
-| `REALM_MAIN_CHARACTER` | Default character for `/realm status` |
+| `REALM_MAIN_CHARACTER` | Default character for `!realm status` |
 | `MYSQL_RO_USER` / `MYSQL_RO_PASS` | Read-only MySQL user (SELECT only) |
 | `REALM_BACKUP_KEY_PATH` | Dedicated SSH key, restricted by a server-side forced command |
 | `REALM_GH_REPO` / `REALM_GH_BRANCH` | Fork/branch tracked by the update watcher |
