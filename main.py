@@ -73,23 +73,26 @@ async def receiver_loop(cfg, stop):
         _save_since(cfg, since)
 
     while not stop.is_set():
-        next_batch, messages = await asyncio.to_thread(
-            matrix_client.sync, cfg.matrix_homeserver_url, cfg.matrix_access_token, since, 30000,
-        )
-        since = next_batch
-        _save_since(cfg, since)
+        try:
+            next_batch, messages = await asyncio.to_thread(
+                matrix_client.sync, cfg.matrix_homeserver_url, cfg.matrix_access_token, since, 30000,
+            )
+            since = next_batch
+            _save_since(cfg, since)
 
-        for room_id, event in messages:
-            if room_id != cfg.matrix_realm_room_id:
-                continue
-            if event.get("sender") != cfg.matrix_owner_id:
-                continue
-            body = event.get("content", {}).get("body", "")
-            parsed = parse_command(body)
-            if not parsed:
-                continue
-            sub, arg = parsed
-            await dispatch(cfg, send, sub, arg)
+            for room_id, event in messages:
+                if room_id != cfg.matrix_realm_room_id:
+                    continue
+                if event.get("sender") != cfg.matrix_owner_id:
+                    continue
+                body = event.get("content", {}).get("body", "")
+                parsed = parse_command(body)
+                if not parsed:
+                    continue
+                sub, arg = parsed
+                await dispatch(cfg, send, sub, arg)
+        except Exception as e:
+            print(f"[receiver_loop] error: {e}")
 
 
 async def main():
