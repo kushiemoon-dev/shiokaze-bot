@@ -4,3 +4,6 @@ venv/
 state.json
 .env
 .worktrees/
+TICKET.md
+REQUIREMENTS.md
+docs/superpowers/
