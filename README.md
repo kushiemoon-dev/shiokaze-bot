@@ -6,18 +6,18 @@ upstream update watcher.
 
 All commands are locked to a single owner (`MATRIX_OWNER_ID`); the bot never
 posts on its own initiative except the update-watcher notice. Matrix has no ephemeral-reply
-equivalent to Discord's — replies are visible to whoever is in the room.
+equivalent to Discord's: replies are visible to whoever is in the room.
 
 ## Commands
 
 Plain-text messages in room `AzerothCore bot`:
 
-- `!realm start` — starts the VM, waits for the world to finish loading, confirms once it's playable
-- `!realm stop` — graceful shutdown (saves the DB before power-off)
-- `!realm status` — up/down, main character, bots online
-- `!realm alt <name>` — same, for any character in the roster
-- `!realm health` — VM and Proxmox host RAM/CPU, warns if it's getting tight
-- `!realm backup` — triggers a remote DB+patches+config backup
+- `!realm start`: starts the VM, waits for the world to finish loading, confirms once it's playable
+- `!realm stop`: graceful shutdown (saves the DB before power-off)
+- `!realm status`: up/down, main character, bots online
+- `!realm alt <name>`: same, for any character in the roster
+- `!realm health`: VM and Proxmox host RAM/CPU, warns if it's getting tight
+- `!realm backup`: triggers a remote DB+patches+config backup
 
 Background task: checks once a week whether the tracked fork has a new
 commit, posts into room `Realm events` only if it does.
@@ -42,7 +42,7 @@ commit, posts into room `Realm events` only if it does.
 | `REALM_BACKUP_KEY_PATH` | Dedicated SSH key, restricted by a server-side forced command |
 | `REALM_GH_REPO` / `REALM_GH_BRANCH` | Fork/branch tracked by the update watcher |
 
-No secret is hardcoded in the code — everything comes from the environment.
+No secret is hardcoded in the code; everything comes from the environment.
 
 ## Deployment
 
