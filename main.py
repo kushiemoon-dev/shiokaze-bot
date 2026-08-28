@@ -1,4 +1,4 @@
-"""Entry point — long-polls Matrix for owner-only !realm commands and runs
+"""Entry point: long-polls Matrix for owner-only !realm commands and runs
 the periodic GitHub watcher."""
 
 import asyncio

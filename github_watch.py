@@ -1,4 +1,4 @@
-"""Weekly GitHub commit watcher — posts to the Matrix events room instead of
+"""Weekly GitHub commit watcher, posts to the Matrix events room instead of
 a Discord DM to the owner."""
 
 import asyncio
@@ -31,7 +31,7 @@ def check_github_update(cfg):
 
 
 async def run_loop(cfg, stop):
-    """Checks immediately, then every 168h, until `stop` is set — mirrors the
+    """Checks immediately, then every 168h, until `stop` is set: mirrors the
     original tasks.loop(hours=168) semantics (fires once as soon as started)."""
     while not stop.is_set():
         try:

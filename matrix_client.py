@@ -1,4 +1,4 @@
-"""Matrix Client-Server API — send + receive. stdlib only."""
+"""Matrix Client-Server API: send + receive. stdlib only."""
 
 import json
 import time

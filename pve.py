@@ -1,4 +1,4 @@
-"""Proxmox API calls — VM power control + host status. Same token/permissions
+"""Proxmox API calls: VM power control + host status. Same token/permissions
 as the Discord version (shiokazebot@pve!botapi), unchanged by this port."""
 
 import requests

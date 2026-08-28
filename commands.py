@@ -1,4 +1,4 @@
-"""Realm control commands — ported from Discord app_commands to plain async
+"""Realm control commands, ported from Discord app_commands to plain async
 functions. Owner-lock and command parsing live in main.py, not here."""
 
 import asyncio
@@ -69,7 +69,7 @@ async def _character_lines(cfg, name):
     if not perso:
         return None, bots_online
     lines = [
-        f"**{perso['name']}** — level {perso['level']}, "
+        f"**{perso['name']}**: level {perso['level']}, "
         f"{format_money(perso['money'])}, zone {perso['zone']}, "
         f"{perso['totaltime'] // 3600}h played"
     ]
